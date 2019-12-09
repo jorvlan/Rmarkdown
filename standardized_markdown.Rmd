@@ -1,0 +1,135 @@
+---
+title: "standardized_markdown"
+author: "Jordy van Langen"
+date: '`r format(Sys.time(), "%B %d, %Y")`'
+output:
+  pdf_document: default
+  html_document: default
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## The following contains a standardized workflow following best practices in the open science community (2019).
+
+### 1. First steps
+
+- Give a meaningful title to your markdown document.
+- Change the default date - for automaticity - to: `"r Sys.Date()"` or `"r format(Sys.time(), "%B %d, %Y")"`
+- Add 'urlcolor' if you want to highlight hyperlinks in a color of your choice in the rendered document. An example of a standardized markdown header:
+
+```{r, eval = FALSE}
+---
+ title: "standardized_markdown"
+ author: "Jordy van Langen"
+ date:   '`r format(Sys.time(), "%B %d, %Y")`'
+ output:
+  pdf_document: default
+  html_document: default
+urlcolor: blue
+---
+```
+
+### 2. R-version check
+
+- Create an R chunk that gives the current R version that you are using.
+```{r check R version, echo = TRUE}
+R.version$version.string
+```
+
+### 3. Loading libraries
+
+- Create an R chunk that loads all the used libraries.
+```{r load libraries, message = FALSE, eval = FALSE}
+library("ggplot2") #Version 3.2.1
+library("here") #Version 0.1
+
+packageVersion()
+sessionInfo()
+```
+- Always make sure to install the latest version of a package when performing your analysis. You can manually check the version of each package with `packageVersion()`.
+
+- `sessionInfo()` also gives you a lot of information about packages installed and your R version used, however, this might not be desired since you will receive a lot of information that is not always of interest.
+
+- An alternative might be the `packrat` package, developed by [Rstudio](https://rstudio.github.io/packrat/). This is a solid way to manage the R packages your project depends on in an isolated, portable, and reproducible way.
+
+### 4. Importing data
+
+- When loading data from your computer (i.e., not directly from an url), use the `here` package [Müller, 2017](https://cran.r-project.org/package=here). This offers a robust solution to make sure that file access does not break accross different computing platforms.A detailed description of the use of this package is described in: [A Reproducible Data Analysis Workflow with R Markdown, Git, Make, and Docker, 2019](https://psyarxiv.com/8xzqy/).
+
+- Use the following folder structure: 
+     
+```{markdown}
+#  projectname (your project folder)
+    
+#     data (folder containing your data)
+#     R (folder containing your code)
+```
+
+
+- An example on how to import data files, taken and adjusted from [A Reproducible Data Analysis Workflow with R Markdown, Git, Make, and Docker, 2019](https://psyarxiv.com/8xzqy/).
+
+###### Bad
+```{r, eval = FALSE}
+NHANES <-read.csv("/Users/jordyvanlangen/standardized_markdown/data/NHANES.csv")
+```
+
+###### Good
+```{r, eval = FALSE}
+NHANES <-read.csv("data/NHANES.csv")
+```
+
+###### Better
+```{r, eval = FALSE}
+NHANES <-read.csv(here("data", "NHANES.csv"))
+```
+
+###### Best (Jordy van Langen)
+```{r, eval = FALSE}
+NHANES_df <- read.csv(here("data", "NHANES.csv"))
+```
+- Personal remark to this example: I would add `_df` to `NHANES` to indicate that you are working with a dataframe. This is also advised by the [Statistical thinking for the 21st century course by Russel Poldrack (2019)](http://statsthinking21.org/index.html).
+
+### 5. Data pre-processing and analysis 
+
+- At this stage you can start writing your analysis code.
+
+### 6. Knitting 
+
+- You can knit your markdown to an HTML file, however that does not look really 'fancy' and not 'publication-ready'. Therefore, knitting to PDF might be a better option. 
+
+- When you want to knit your .Rmd to pdf, you'll need to have `LaTeX` installed. For R Markdown users who have not installed `LaTeX` before, it is recommended that you install the `TinyTex` package by [YiHui Xie](https://yihui.name/tinytex/).
+
+```{r, eval = FALSE}
+install.packages("tinytex") 
+```
+
+### 7. Appendix:
+
+##### The appendix includes an amount of useful sources that might improve your R (markdown) workflow.
+
+- Check the [R Markdown cheatsheet](https://rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf) for the extensive possibilities that R markdown offers. 
+
+- There is the possibility of writing your whole paper (reported stats, tables, figures) in markdown complied APA style with the `papaja` package by [Frederik Aust, 2019](https://github.com/crsh/papaja). If you do not have to (or want to) write in APA, you can check out the code below for an example on how to make a basic table. 
+
+- The `redoc` package  by [Noam Ross, 2019](https://github.com/noamross/redoc): enables a two-way R Markdown-Microsoft Word workflow. It generates Word documents that can be de-rendered back into R Markdown, retaining edits on the Word document, including tracked changes.
+
+- 4 key-points that researchers should take into account when sharing data. See [Analysis of Open Data and Computational Reproducibility in Registered Reports in Psychology, 2019](https://psyarxiv.com/fk8vh).
+
+- Power analysis: although G*Power is still being used predominantly, it does not suit reproducible research. Therefore, a good alternative is to perform your power-analysis in R. For simpler power-analysis (e.g. t-tests) you can find a good tutorial from Dan Quintana  (2019) on [YouTube](https://www.youtube.com/watch?v=ZIjOG8LTTh8) in which he explains using the `pwr` package [Helios de Rosario, 2019](https://github.com/heliosdrm/pwr). For more extensive, simulation-based, power-analysis have a look at the `ANOVApower` package by [Daniël Lakens, 2019](https://github.com/Lakens/ANOVApower).
+
+- If you want to unload a package and use a clean version of it again, you can use the following code:
+
+```{r, eval = FALSE}
+if("package_name" %in% (.packages())){
+  detach('package:package_name', unload=TRUE)}
+
+library("package_name")
+```
+
+
+### This workflow was made by Jordy van Langen, `r format(Sys.time(), "%B %d, %Y")`.
+
+If you have suggestions on how to improve, feel welcome to send a message to [jordy.vanlangen@sydney.edu.au](jordy.vanlangen@sydney.edu.au) or contact me on Twitter [jordyvanlangen](https:/www.twitter.com/jordyvanlangen)

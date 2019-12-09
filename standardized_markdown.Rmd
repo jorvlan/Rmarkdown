@@ -34,14 +34,14 @@ urlcolor: blue
 
 ### 2. R-version check
 
-- Create an R chunk that gives the current R version that you are using.
+- Create an R chunk that prints the current R version you are using.
 ```{r check R version, echo = TRUE}
 R.version$version.string
 ```
 
 ### 3. Loading libraries
 
-- Create an R chunk that loads all the used libraries.
+- Create an R chunk that loads all the libraries you are using.
 ```{r load libraries, message = FALSE, eval = FALSE}
 library("ggplot2") #Version 3.2.1
 library("here") #Version 0.1
@@ -61,32 +61,32 @@ sessionInfo()
 
 - Use the following folder structure: 
      
-```{markdown}
-#  projectname (your project folder)
+```{r, eval = FALSE}
+projectname (your project folder)
     
-#     data (folder containing your data)
-#     R (folder containing your code)
+    data (folder containing your data)
+    R (folder containing your code)
 ```
 
 
 - An example on how to import data files, taken and adjusted from [A Reproducible Data Analysis Workflow with R Markdown, Git, Make, and Docker, 2019](https://psyarxiv.com/8xzqy/).
 
-###### Bad
+###### Not robust
 ```{r, eval = FALSE}
 NHANES <-read.csv("/Users/jordyvanlangen/standardized_markdown/data/NHANES.csv")
 ```
 
-###### Good
+###### Not robust
 ```{r, eval = FALSE}
 NHANES <-read.csv("data/NHANES.csv")
 ```
 
-###### Better
+###### Robust
 ```{r, eval = FALSE}
 NHANES <-read.csv(here("data", "NHANES.csv"))
 ```
 
-###### Best (Jordy van Langen)
+###### Robust
 ```{r, eval = FALSE}
 NHANES_df <- read.csv(here("data", "NHANES.csv"))
 ```
@@ -118,7 +118,7 @@ install.packages("tinytex")
 
 - 4 key-points that researchers should take into account when sharing data. See [Analysis of Open Data and Computational Reproducibility in Registered Reports in Psychology, 2019](https://psyarxiv.com/fk8vh).
 
-- Power analysis: although G*Power is still being used predominantly, it does not suit reproducible research. Therefore, a good alternative is to perform your power-analysis in R. For simpler power-analysis (e.g. t-tests) you can find a good tutorial from Dan Quintana  (2019) on [YouTube](https://www.youtube.com/watch?v=ZIjOG8LTTh8) in which he explains using the `pwr` package [Helios de Rosario, 2019](https://github.com/heliosdrm/pwr). For more extensive, simulation-based, power-analysis have a look at the `ANOVApower` package by [Daniël Lakens, 2019](https://github.com/Lakens/ANOVApower).
+- Power analysis: although G*Power is still being used predominantly, it does not suit reproducible research. Therefore, a good alternative is to perform your power-analysis in R. For simpler power-analysis (e.g. t-tests) you can find a good tutorial from Dan Quintana  (2019) on [YouTube](https://www.youtube.com/watch?v=ZIjOG8LTTh8) in which he explains the use of the `pwr` package [Helios de Rosario, 2019](https://github.com/heliosdrm/pwr). For more extensive, simulation-based, power-analysis have a look at the `ANOVApower` package by [Daniël Lakens, 2019](https://github.com/Lakens/ANOVApower).
 
 - If you want to unload a package and use a clean version of it again, you can use the following code:
 

@@ -112,7 +112,7 @@ install.packages("tinytex")
 
 - Check the [R Markdown cheatsheet](https://rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf) for the extensive possibilities that R markdown offers. 
 
-- There is the possibility of writing your whole paper (reported stats, tables, figures) in markdown complied APA style with the `papaja` package by [Frederik Aust, 2019](https://github.com/crsh/papaja). If you do not have to (or want to) write in APA, you can check out the code below for an example on how to make a basic table. 
+- There is the possibility of writing your whole paper (reported stats, tables, figures) in markdown complied APA style with the `papaja` package by [Frederik Aust, 2019](https://github.com/crsh/papaja).
 
 - The `redoc` package  by [Noam Ross, 2019](https://github.com/noamross/redoc): enables a two-way R Markdown-Microsoft Word workflow. It generates Word documents that can be de-rendered back into R Markdown, retaining edits on the Word document, including tracked changes.
 
